@@ -17,5 +17,6 @@
   },
   "homepage": "https://github.com/BDEMR/bdemr-pentra60-reporter#readme",
   "dependencies": {
+    "express": "^4.16.2"
   }
 }
