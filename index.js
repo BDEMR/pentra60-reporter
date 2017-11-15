@@ -1,5 +1,9 @@
 const express = require('express')
-const app = express()
+const cors = require('cors');
+const app = express();
+app.use(cors());
+app.options('*', cors());
+
 let { HoribaPentra60Reader, HoribaPentra60Parser } = require('node-astm');
 
 resultQueue = []
@@ -43,7 +47,7 @@ writeLog = (...args) => {
   console.log(...args);
 }
 
-app.get('/get-reading', (req, res) => {
+app.all('/get-reading', (req, res) => {
   let subList = resultQueue.slice(0, 2);
   res.send(subList);
 });
