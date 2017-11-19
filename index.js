@@ -58,5 +58,32 @@ app.listen(8020, () => {
 });
 
 
+let machine = new HoribaPentra60Reader();
+
+machine.on('log', (...args) => {
+  console.log(...args);
+});
+
+machine.on('error', (error) => {
+  console.log(error);
+});
+
+machine.on('parse-error', (error) => {
+  console.log(error);
+});
+
+machine.on('data', (transmission) => {
+  let string = machine.summarizeTransmission(transmission);
+  let parser = new HoribaPentra60Parser();
+  let results = parser.parse(string);
+  console.log(results); // outputs { testResultList, suspectedPathologyList }
+  resultQueue.unshift(results);
+  if (resultQueue.length > 10){
+    resultQueue = resultQueue.slice(0,9);
+  }
+})
+
+machine.initiate('COM2');
+
 
 
